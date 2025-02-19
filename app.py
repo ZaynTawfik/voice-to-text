@@ -21,7 +21,7 @@ def main():
                         tmp_path = tmp_file.name
                     
                     # Load Whisper model (base model for faster processing)
-                    model = whisper.load_model("base")
+                    model = whisper.load_model("tiny")
                     
                     # Transcribe audio
                     result = model.transcribe(tmp_path)
