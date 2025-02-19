@@ -4,6 +4,7 @@ import tempfile
 import os
 from st_audiorec import st_audiorec
 import pytesseract
+from PIL import Image
 
 st.title("Audio to Text Transcription with Whisper")
     
