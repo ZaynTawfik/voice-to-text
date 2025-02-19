@@ -26,6 +26,7 @@ if audio_file is not None:
                     
                 # Transcribe audio
                 result = model.transcribe(tmp_path)
+                transcript = result["text"]
                     
                 # Clean up temporary file
                 os.unlink(tmp_path)
@@ -33,7 +34,7 @@ if audio_file is not None:
                 # Display results
                 st.success("Transcription Complete")
                 st.subheader("Transcribed Text:")
-                st.write(result["text"])
+                st.write(transcript)
                   
                 # Add download button
                 st.download_button(
