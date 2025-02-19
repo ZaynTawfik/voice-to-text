@@ -46,3 +46,17 @@ if audio_file is not None:
             except Exception as e:
                 st.error(f"Error processing audio: {str(e)}")
                 os.unlink(tmp_path)
+
+# Detect intent from transcript
+if 'transcript' in locals():
+    intent = None
+    if "hello" in transcript.lower():
+        intent = "passport"
+    elif "invoice" in transcript.lower():
+        intent = "invoice"
+
+    if intent:
+        st.session_state.intent = intent
+        st.write(f"**Action needed:** Upload your {intent}!")
+    else:
+        st.error("Could not detect document type. Please try again.")
