@@ -96,14 +96,3 @@ if st.session_state.intent:
                 
             except Exception as e:
                 st.error(f"Error processing document: {str(e)}")
-
-
-# Reset session
-if st.button("Start Over"):
-    st.session_state.clear()
-
-# Instructions
-st.markdown("---")
-st.write("**How to use:**")
-st.write("1. Click the microphone and say, 'I need to upload my passport/invoice'.")
-st.write("2. Upload the requested document.")
