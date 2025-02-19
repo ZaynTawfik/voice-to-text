@@ -2,6 +2,7 @@ import streamlit as st
 import whisper
 import tempfile
 import os
+from st_audiorec import st_audiorec
 
 st.title("Audio to Text Transcription with Whisper")
     
