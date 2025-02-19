@@ -3,3 +3,4 @@ openai-whisper
 torch
 torchaudio
 streamlit-audiorec
+pytesseract
