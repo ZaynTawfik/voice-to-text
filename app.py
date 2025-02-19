@@ -70,18 +70,18 @@ if 'intent' in st.session_state:
         type=["pdf", "jpg", "png"]
     )
 
-if uploaded_file:
-    # Save to temp file
-    with tempfile.NamedTemporaryFile(delete=False, suffix=".jpg") as tmp_file:
-        tmp_file.write(uploaded_file.getvalue())
-        img_path = tmp_file.name
+    if uploaded_file:
+        # Save to temp file
+        with tempfile.NamedTemporaryFile(delete=False, suffix=".jpg") as tmp_file:
+            tmp_file.write(uploaded_file.getvalue())
+            img_path = tmp_file.name
 
-    # Simple validation using OCR (for images)
-    if uploaded_file.type.startswith("image"):
-        text = pytesseract.image_to_string(Image.open(img_path))
-        if st.session_state.intent in text.lower():
-            st.success("✅ Valid document uploaded!")
-        else:
-            st.error("❌ Document does not match the request.")
+        # Simple validation using OCR (for images)
+        if uploaded_file.type.startswith("image"):
+            text = pytesseract.image_to_string(Image.open(img_path))
+            if st.session_state.intent in text.lower():
+                st.success("✅ Valid document uploaded!")
+            else:
+                st.error("❌ Document does not match the request.")
     
-    os.unlink(img_path)  # Delete temp file
+        os.unlink(img_path)  # Delete temp file
