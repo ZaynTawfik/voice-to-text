@@ -8,6 +8,16 @@ from PIL import Image
 
 st.title("Audio to Text Transcription with Whisper")
 
+# Reset session
+if st.button("Start Over"):
+    st.session_state.clear()
+
+# Instructions
+st.markdown("---")
+st.write("**How to use:**")
+st.write("1. Click the microphone and say, 'I need to upload my passport/invoice'.")
+st.write("2. Upload the requested document.")
+
 # Initialize session state
 if 'transcript' not in st.session_state:
     st.session_state.transcript = None
