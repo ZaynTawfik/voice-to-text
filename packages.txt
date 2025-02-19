@@ -1,2 +1,2 @@
-ffmpeg
-
+tesseract-ocr
+libtesseract-dev
