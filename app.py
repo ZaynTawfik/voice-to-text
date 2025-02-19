@@ -79,9 +79,9 @@ if st.session_state.intent:
                 
                     # Display results
                     st.subheader("Search Results:")
-                    if search_word:
+                    if st.session_state.intent:
                         result = "exists ✅" if word_exists else "does not exist ❌"
-                        st.markdown(f"**'{search_word}'** {result} in the image")
+                        st.markdown(f"**'{st.session_state.intent}'** {result} in the image")
                 
                     # Show extracted text
                     st.subheader("Extracted Text:")
