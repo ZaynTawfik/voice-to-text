@@ -61,3 +61,9 @@ if 'transcript' in locals():
         st.write(f"**Action needed:** Upload your {intent}!")
     else:
         st.error("Could not detect document type. Please try again.")
+
+if 'intent' in st.session_state:
+    uploaded_file = st.file_uploader(
+        f"Upload your {st.session_state.intent}",
+        type=["pdf", "jpg", "png"]
+    )
