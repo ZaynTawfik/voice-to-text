@@ -7,6 +7,12 @@ import pytesseract
 from PIL import Image
 
 st.title("Audio to Text Transcription with Whisper")
+
+# Initialize session state
+if 'transcript' not in st.session_state:
+    st.session_state.transcript = None
+if 'intent' not in st.session_state:
+    st.session_state.intent = None
     
 # File uploader
 audio_file = st.file_uploader("Upload Audio", type=["wav", "mp3", "m4a", "ogg", "flac"])
@@ -28,60 +34,60 @@ if audio_file is not None:
                     
                 # Transcribe audio
                 result = model.transcribe(tmp_path)
-                transcript = result["text"]
-                    
+                st.session_state.transcript = result["text"]    
                 # Clean up temporary file
                 os.unlink(tmp_path)
                     
                 # Display results
                 st.success("Transcription Complete")
                 st.subheader("Transcribed Text:")
-                st.write(transcript)
-                  
-                # Add download button
-                st.download_button(
-                    label="Download Transcription",
-                    data=result["text"],
-                    file_name="transcription.txt",
-                    mime="text/plain"
-                )
-                    
+                st.write(st.session_state.transcript)
+                              
             except Exception as e:
                 st.error(f"Error processing audio: {str(e)}")
                 os.unlink(tmp_path)
 
-# Detect intent from transcript
-if 'transcript' in locals():
-    intent = None
-    if "hello" in transcript.lower():
-        intent = "passport"
-    elif "invoice" in transcript.lower():
-        intent = "invoice"
-
-    if intent:
-        st.session_state.intent = intent
-        st.write(f"**Action needed:** Upload your {intent}!")
+# Intent detection
+if st.session_state.transcript:
+    if "hello" in st.session_state.transcript.lower():
+        st.session_state.intent = "passport"
+    elif "invoice" in st.session_state.transcript.lower():
+        st.session_state.intent = "invoice"
     else:
-        st.error("Could not detect document type. Please try again.")
+        st.session_state.intent = None
 
-if 'intent' in st.session_state:
+
+# Document upload (only shown if intent is detected)
+if st.session_state.intent:
     uploaded_file = st.file_uploader(
         f"Upload your {st.session_state.intent}",
         type=["pdf", "jpg", "png"]
     )
 
-    if uploaded_file:
-        # Save to temp file
-        with tempfile.NamedTemporaryFile(delete=False, suffix=".jpg") as tmp_file:
-            tmp_file.write(uploaded_file.getvalue())
-            img_path = tmp_file.name
+if uploaded_file is not None:
+        try:
+            # Open and display image
+            image = Image.open(uploaded_file)
+            st.image(image, caption="Uploaded Image", use_column_width=True)
 
-        # Simple validation using OCR (for images)
-        if uploaded_file.type.startswith("image"):
-            text = pytesseract.image_to_string(Image.open(img_path))
-            if st.session_state.intent in text.lower():
-                st.success("✅ Valid document uploaded!")
+            # Extract text
+            extracted_text = pytesseract.image_to_string(image).lower()
+            
+            if extracted_text:
+                # Check for word existence
+                word_exists = st.session_state.intent.lower() in extracted_text.lower()
+                
+                # Display results
+                st.subheader("Search Results:")
+                if search_word:
+                    result = "exists ✅" if word_exists else "does not exist ❌"
+                    st.markdown(f"**'{search_word}'** {result} in the image")
+                
+                # Show extracted text
+                st.subheader("Extracted Text:")
+                st.write(extracted_text)
             else:
-                st.error("❌ Document does not match the request.")
-    
-        os.unlink(img_path)  # Delete temp file
+                st.warning("No text found in the image")
+                
+        except Exception as e:
+            st.error(f"Error processing image: {str(e)}")
