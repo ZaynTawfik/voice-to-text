@@ -1,3 +1,2 @@
 ffmpeg
-tesseract-ocr
-tesseract-ocr-eng  # Add other languages as needed
+
