@@ -74,20 +74,15 @@ if st.session_state.intent:
                 extracted_text = pytesseract.image_to_string(image).lower()
             
                 if extracted_text:
-                    # Check for word existence
-                    word_exists = "passport" in extracted_text.lower()
-                
-                    # Display results
-                    st.subheader("Search Results:")
-                    if st.session_state.intent:
-                        result = "exists ✅" if word_exists else "does not exist ❌"
-                        st.markdown(f"**'{st.session_state.intent}'** {result} in the image")
-                
+                    if st.session_state.intent in extracted_text.lower():
+                        st.success("✅ Valid document!")
+                    else:
+                        st.error("❌ Invalid document")
                     # Show extracted text
                     st.subheader("Extracted Text:")
                     st.write(extracted_text)
                 else:
-                    st.warning("No text found in the image")
+                    st.warning("No text found in the document")
                 
             except Exception as e:
-                st.error(f"Error processing image: {str(e)}")
+                st.error(f"Error processing document: {str(e)}")
