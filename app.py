@@ -7,8 +7,8 @@ from st_audiorec import st_audiorec
 st.title("Audio to Text Transcription with Whisper")
     
 # File uploader
-#audio_file = st.file_uploader("Upload Audio", type=["wav", "mp3", "m4a", "ogg", "flac"])
-audio_file = st_audiorec()
+audio_file = st.file_uploader("Upload Audio", type=["wav", "mp3", "m4a", "ogg", "flac"])
+#audio_file = st_audiorec()
 
 if audio_file is not None:
     st.audio(audio_file, format='audio/wav')
