@@ -64,30 +64,30 @@ if st.session_state.intent:
         type=["pdf", "jpg", "png"]
     )
 
-if uploaded_file is not None:
-        try:
-            # Open and display image
-            image = Image.open(uploaded_file)
-            st.image(image, caption="Uploaded Image", use_column_width=True)
+    if uploaded_file is not None:
+            try:
+                # Open and display image
+                image = Image.open(uploaded_file)
+                st.image(image, caption="Uploaded Image", use_column_width=True)
 
-            # Extract text
-            extracted_text = pytesseract.image_to_string(image).lower()
+                # Extract text
+                extracted_text = pytesseract.image_to_string(image).lower()
             
-            if extracted_text:
-                # Check for word existence
-                word_exists = "passport" in extracted_text.lower()
+                if extracted_text:
+                    # Check for word existence
+                    word_exists = "passport" in extracted_text.lower()
                 
-                # Display results
-                st.subheader("Search Results:")
-                if search_word:
-                    result = "exists ✅" if word_exists else "does not exist ❌"
-                    st.markdown(f"**'{search_word}'** {result} in the image")
+                    # Display results
+                    st.subheader("Search Results:")
+                    if search_word:
+                        result = "exists ✅" if word_exists else "does not exist ❌"
+                        st.markdown(f"**'{search_word}'** {result} in the image")
                 
-                # Show extracted text
-                st.subheader("Extracted Text:")
-                st.write(extracted_text)
-            else:
-                st.warning("No text found in the image")
+                    # Show extracted text
+                    st.subheader("Extracted Text:")
+                    st.write(extracted_text)
+                else:
+                    st.warning("No text found in the image")
                 
-        except Exception as e:
-            st.error(f"Error processing image: {str(e)}")
+            except Exception as e:
+                st.error(f"Error processing image: {str(e)}")
