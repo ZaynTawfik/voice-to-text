@@ -3,48 +3,44 @@ import whisper
 import tempfile
 import os
 
-def main():
-    st.title("Audio to Text Transcription with Whisper")
+st.title("Audio to Text Transcription with Whisper")
     
-    # File uploader
-    audio_file = st.file_uploader("Upload Audio", type=["wav", "mp3", "m4a", "ogg", "flac"])
+# File uploader
+audio_file = st.file_uploader("Upload Audio", type=["wav", "mp3", "m4a", "ogg", "flac"])
     
-    if audio_file is not None:
-        st.audio(audio_file, format='audio/wav')
+if audio_file is not None:
+    st.audio(audio_file, format='audio/wav')
         
-        if st.button("Transcribe Audio"):
-            with st.spinner("Processing audio..."):
-                try:
-                    # Save uploaded file to temporary file
-                    with tempfile.NamedTemporaryFile(delete=False, suffix=".wav") as tmp_file:
-                        tmp_file.write(audio_file.read())
-                        tmp_path = tmp_file.name
+    if st.button("Transcribe Audio"):
+        with st.spinner("Processing audio..."):
+            try:
+                # Save uploaded file to temporary file
+                with tempfile.NamedTemporaryFile(delete=False, suffix=".wav") as tmp_file:
+                    tmp_file.write(audio_file.read())
+                    tmp_path = tmp_file.name
                     
-                    # Load Whisper model (base model for faster processing)
-                    model = whisper.load_model("tiny")
+                # Load Whisper model (base model for faster processing)
+                model = whisper.load_model("tiny")
                     
-                    # Transcribe audio
-                    result = model.transcribe(tmp_path)
+                # Transcribe audio
+                result = model.transcribe(tmp_path)
                     
-                    # Clean up temporary file
-                    os.unlink(tmp_path)
+                # Clean up temporary file
+                os.unlink(tmp_path)
                     
-                    # Display results
-                    st.success("Transcription Complete")
-                    st.subheader("Transcribed Text:")
-                    st.write(result["text"])
+                # Display results
+                st.success("Transcription Complete")
+                st.subheader("Transcribed Text:")
+                st.write(result["text"])
+                  
+                # Add download button
+                st.download_button(
+                    label="Download Transcription",
+                    data=result["text"],
+                    file_name="transcription.txt",
+                    mime="text/plain"
+                )
                     
-                    # Add download button
-                    st.download_button(
-                        label="Download Transcription",
-                        data=result["text"],
-                        file_name="transcription.txt",
-                        mime="text/plain"
-                    )
-                    
-                except Exception as e:
-                    st.error(f"Error processing audio: {str(e)}")
-                    os.unlink(tmp_path)
-
-if __name__ == "__main__":
-    main()
+            except Exception as e:
+                st.error(f"Error processing audio: {str(e)}")
+                os.unlink(tmp_path)
