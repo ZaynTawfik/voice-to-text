@@ -75,7 +75,7 @@ if uploaded_file is not None:
             
             if extracted_text:
                 # Check for word existence
-                word_exists = st.session_state.intent.lower() in extracted_text.lower()
+                word_exists = "passport" in extracted_text.lower()
                 
                 # Display results
                 st.subheader("Search Results:")
