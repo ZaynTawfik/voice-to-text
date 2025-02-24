@@ -6,7 +6,7 @@ from st_audiorec import st_audiorec
 import pytesseract
 from PIL import Image
 
-st.title("Audio to Text Transcription with Whisper")
+st.title("Document Collection AI Agent")
 
 # Reset session
 if st.button("Start Over"):
@@ -14,8 +14,8 @@ if st.button("Start Over"):
 
 # Instructions
 st.markdown("---")
-st.write("**How to use:**")
-st.write("1. Click the microphone and say, 'I need to upload my passport/invoice'.")
+st.write("**How it works:**")
+st.write("1. Upload a voice recording with your intent, 'I need to open an account or I need to upload my passport/id'.")
 st.write("2. Upload the requested document.")
 
 # Initialize session state
