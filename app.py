@@ -59,7 +59,7 @@ if audio_file is not None:
 
 # Intent detection
 if st.session_state.transcript:
-    if "hello" in st.session_state.transcript.lower():
+    if "passport" in st.session_state.transcript.lower():
         st.session_state.intent = "passport"
     elif "invoice" in st.session_state.transcript.lower():
         st.session_state.intent = "invoice"
