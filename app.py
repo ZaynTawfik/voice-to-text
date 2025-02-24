@@ -63,6 +63,8 @@ if st.session_state.transcript:
         st.session_state.intent = "passport"
     elif "invoice" in st.session_state.transcript.lower():
         st.session_state.intent = "invoice"
+    elif "want" in st.session_state.transcript.lower():
+        st.session_state.intent = "passport"
     else:
         st.session_state.intent = None
 
