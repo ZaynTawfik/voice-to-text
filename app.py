@@ -6,7 +6,7 @@ from st_audiorec import st_audiorec
 import pytesseract
 from PIL import Image
 
-st.title("Document Collection AI Agent")
+st.title("🗂️ Document Collection AI Agent")
 
 # Reset session
 if st.button("Start Over"):
