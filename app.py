@@ -15,7 +15,7 @@ if st.button("Start Over"):
 # Instructions
 st.markdown("---")
 st.write("**How it works:**")
-st.write("1. Upload a voice recording with your intent, 'I need to open an account or I need to upload my passport/id'.")
+st.write("1. Upload a voice recording with your intent, 'I need to open an account' or 'I need to upload my passport/id'.")
 st.write("2. Upload the requested document.")
 
 # Initialize session state
